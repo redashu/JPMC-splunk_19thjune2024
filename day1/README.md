@@ -188,3 +188,15 @@ Checking prerequisites...
         Checking http port [8000]: open
         Checking mgmt port [8089]: open
 ```
+
+### enable auto start on boot of machine 
+
+```
+/opt/splunk/bin/splunk  stop 
+====>>
+
+/opt/splunk/bin/splunk  enable boot-start
+Init script installed at /etc/init.d/splunk.
+Init script is configured to run at boot.
+
+```
