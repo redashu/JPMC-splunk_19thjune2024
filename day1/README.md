@@ -229,3 +229,85 @@ rpm -e splunk-9.2.1-78803f08aabb.x86_64
 
 rm -rf /opt/splunk/
 ```
+
+### setup httpd webserver and host a sample webapp 
+
+```
+ 2  yum install httpd -y
+
+    4  yum install git -y
+    6  git  clone  https://github.com/schoolofdevops/html-sample-app.git
+    7  ls
+    8  cp -rf html-sample-app/*  /var/www/html/
+systemctl enable --now   httpd
+```
+
+### httpd app will generate logs in given location 
+
+<img src="logs.png">
+
+## setup Universal forwarder 
+
+```
+wget -O splunkforwarder-9.2.1-78803f08aabb.x86_64.rpm "https://download.splunk.com/products/universalforwarder/releases/9."
+
+===>>
+ls
+
+==>> installing it
+
+[root@3338152d53e1 ~]# ls
+splunkforwarder-9.2.1-78803f08aabb.aarch64.rpm
+[root@3338152d53e1 ~]# rpm -ivh splunkforwarder-9.2.1-78803f08aabb.aarch64.rpm 
+
+
+```
+
+### verify forwarder 
+
+```
+[root@3338152d53e1 ~]# cd  /opt/splunkforwarder/
+
+[root@3338152d53e1 splunkforwarder]# ls
+README-splunk.txt  cmake          etc  include  license-eula.txt  share                                                    swidtag
+bin                copyright.txt  ftr  lib      openssl           splunkforwarder-9.2.1-78803f08aabb-linux-armv8-manifest  uf
+
+
+[root@3338152d53e1 splunkforwarder]# ls bin/
+btool    bzip2     copyright.txt  genSignedServerCert.sh  openssl       pid_check.sh  setSplunkEnv  splunk-tlsd  splunkmon
+btprobe  classify  genRootCA.sh   genWebCert.sh           pcre2-config  scripts       splunk        splunkd      supervisor-simulator
+[root@3338152d53e1 splunkforwarder]# 
+[root@3338152d53e1 splunkforwarder]# 
+
+
+[root@3338152d53e1 splunkforwarder]# ls etc/
+apps           deployment-apps  log-btool-debug.cfg    log-debug.cfg    modules          shcluster                   system
+auth           disabled-apps    log-btool.cfg          log-utility.cfg  myinstall        splunk-launch.conf          users
+copyright.txt  init.d           log-cmdline-debug.cfg  log.cfg          packagetype      splunk-launch.conf.default
+datetime.xml   licenses         log-cmdline.cfg        manager-apps     prettyprint.xsl  splunk.version
+[root@3338152d53e1 splunkforwarder]# 
+
+```
+
+### start forwarder service 
+
+
+```
+/opt/splunkforwarder/bin/splunk  start --accept-license
+Warning: Attempting to revert the SPLUNK_HOME ownership
+Warning: Executing "chown -R splunkfwd:splunkfwd /opt/splunkforwarder"
+
+This appears to be your first time running this version of Splunk.
+
+Splunk software must create an administrator account during startup. Otherwise, you cannot log in.
+Create credentials for the administrator account.
+Characters do not appear on the screen when you type in credentials.
+
+Please enter an administrator username: admin
+Password must contain at least:
+   * 8 total printable ASCII character(s).
+Please enter a new password: 
+Please confirm new password: 
+
+```
+
