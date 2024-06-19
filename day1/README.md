@@ -200,3 +200,20 @@ Init script installed at /etc/init.d/splunk.
 Init script is configured to run at boot.
 
 ```
+
+## revision 
+
+<img src="rev.png">
+
+## data upload in splunk server 
+
+<img src="uload.png">
+
+### Understanding splunk data pipeline process
+
+<img src="datap.png">
+
+### searching data using sPL with splunk app
+
+<img src="search.png">
+
