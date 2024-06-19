@@ -217,3 +217,15 @@ Init script is configured to run at boot.
 
 <img src="search.png">
 
+## Uninstalling and removing splunk server 
+
+```
+/opt/splunk/bin/splunk  stop 
+/opt/splunk/bin/splunk  disable boot-start
+===> uninstall rpm 
+rpm -e splunk-9.2.1-78803f08aabb.x86_64
+
+===>> remote directory 
+
+rm -rf /opt/splunk/
+```
