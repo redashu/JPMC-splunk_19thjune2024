@@ -75,4 +75,24 @@ splunk helpers are running (PIDs: 3409).
 
 ```
 
+## To accept data from forwarder on Splunk server 
 
+- create on splunk enterprise server a receiver
+
+### creating listner on splunk server 
+
+<img src="forwarder1.png">
+
+### adding forwarer to splunk server as list 
+
+```
+/opt/splunkforwarder/bin/splunk add  forward-server 3.222.96.211:9997
+```
+
+## Introduction to SPL 
+
+### using boolean operator in index 
+
+```
+index="ashu-web" OR index="ashu-secure"
+```
