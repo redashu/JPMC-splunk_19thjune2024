@@ -190,4 +190,13 @@ docker run -d -p 8000:8000 -e "SPLUNK_START_ARGS=--accept-license"  -e "SPLUNK_P
 
 ```
 
+### verify 
+
+```
+docker  ps
+CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS                             PORTS                                                                                              NAMES
+a9d7b50908b9   splunk/splunk:latest   "/sbin/entrypoint.sh…"   43 seconds ago   Up 36 seconds (health: starting)   8065/tcp, 8088-8089/tcp, 8191/tcp, 9887/tcp, 0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 9997/tcp   splunk
+
+```
+
 
