@@ -1,1 +1,78 @@
 # JPMC-splunk_19thjune2024
+
+
+### verify splunk server status
+
+```
+[root@jpmc-splunk-server ~]# /opt/splunk/bin/splunk status
+splunkd is running (PID: 3388).
+splunk helpers are running (PIDs: 3391 3635 3689 3764 7321 7322).
+[root@jpmc-splunk-server ~]# 
+[root@jpmc-splunk-server ~]# netstat -nlpt
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      3255/sshd           
+tcp        0      0 0.0.0.0:8089            0.0.0.0:*               LISTEN      3388/splunkd        
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      3194/master         
+tcp        0      0 0.0.0.0:8191            0.0.0.0:*               LISTEN      3635/mongod         
+tcp        0      0 0.0.0.0:8000            0.0.0.0:*               LISTEN      3388/splunkd       
+```
+
+
+### verify app server 
+
+```
+ec2-user@ip-172-31-85-58 ~]$ sudo -i
+[root@ip-172-31-85-58 ~]# 
+[root@ip-172-31-85-58 ~]# 
+[root@ip-172-31-85-58 ~]# rpm -q httpd
+httpd-2.4.59-2.amzn2023.x86_64
+[root@ip-172-31-85-58 ~]# 
+[root@ip-172-31-85-58 ~]# ls  /var/www/html/
+LICENSE.txt  README.txt  assets  elements.html  generic.html  html-sample-app  html5up-phantom.zip  images  index.html
+[root@ip-172-31-85-58 ~]# 
+[root@ip-172-31-85-58 ~]# systemctl status httpd
+● httpd.service - The Apache HTTP Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; preset: disabled)
+     Active: active (running) since Thu 2024-06-20 04:44:08 UTC; 36min ago
+       Docs: man:httpd.service(8)
+   Main PID: 1959 (httpd)
+     Status: "Total requests: 7; Idle/Busy workers 100/0;Requests/sec: 0.00319; Bytes served/sec:   5 B/sec"
+      Tasks: 177 (limit: 1114)
+     Memory: 18.7M
+        CPU: 1.277s
+     CGroup: /system.slice/httpd.service
+             ├─1959 /usr/sbin/httpd -DFOREGROUND
+             ├─1965 /usr/sbin/httpd -DFOREGROUND
+             ├─1966 /usr/sbin/httpd -DFOREGROUND
+             ├─1967 /usr/sbin/httpd -DFOREGROUND
+             └─1968 /usr/sbin/httpd -DFOREGROUND
+
+Jun 20 04:44:07 ip-172-31-85-58.ec2.internal systemd[1]: Starting httpd.service - The Apache HTTP Server...
+Jun 20 04:44:08 ip-172-31-85-58.ec2.internal systemd[1]: Started httpd.service - The Apache HTTP Server.
+Jun 20 04:44:08 ip-172-31-85-58.ec2.internal httpd[1959]: Server configured, listening on: port 80
+[root@ip-172-31-85-58 ~]# ls   /var/log/httpd/
+access_log  error_log
+```
+
+### verify splunk universal forwarder 
+
+```
+root@ip-172-31-55-184 ~]# cd /opt/splunkforwarder/
+[root@ip-172-31-55-184 splunkforwarder]# ls
+bin    copyright.txt  include  license-eula.txt  README-splunk.txt  splunkforwarder-9.2.1-78803f08aabb-linux-2.6-x86_64-manifest  var
+cmake  etc            lib      openssl           share              swidtag
+[root@ip-172-31-55-184 splunkforwarder]# 
+[root@ip-172-31-55-184 splunkforwarder]# /opt/splunkforwarder/bin/splunk start --accept-license ^C
+[root@ip-172-31-55-184 splunkforwarder]# 
+[root@ip-172-31-55-184 splunkforwarder]# /opt/splunkforwarder/bin/splunk  status
+Warning: Attempting to revert the SPLUNK_HOME ownership
+Warning: Executing "chown -R splunkfwd:splunkfwd /opt/splunkforwarder"
+splunkd is running (PID: 3339).
+splunk helpers are running (PIDs: 3409).
+[root@ip-172-31-55-184 splunkforwarder]# 
+
+
+```
+
+
