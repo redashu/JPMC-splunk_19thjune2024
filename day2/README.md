@@ -96,3 +96,32 @@ splunk helpers are running (PIDs: 3409).
 ```
 index="ashu-web" OR index="ashu-secure"
 ```
+
+## SPlunk v9 forwarder data to splunk server things 
+
+<img src="f11.png">
+
+### checking forwarder 
+
+```
+ cd /opt/splunkforwarder/etc/apps/
+[root@ip-172-31-22-181 apps]# ls
+SplunkUniversalForwarder  introspection_generator_addon  journald_input  learned  search  splunk_httpinput  splunk_internal_metrics
+[root@ip-172-31-22-181 apps]# cd search/
+[root@ip-172-31-22-181 search]# ls
+default  local  metadata
+[root@ip-172-31-22-181 search]# cd local/
+[root@ip-172-31-22-181 local]# ls
+inputs.conf
+[root@ip-172-31-22-181 local]# 
+
+```
+
+### add monitor without index info 
+
+```
+/opt/splunkforwarder/bin/splunk add monitor  /var/log
+
+===>>
+/opt/splunkforwarder/bin/splunk  restart 
+```
