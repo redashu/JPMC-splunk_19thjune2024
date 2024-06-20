@@ -125,3 +125,69 @@ inputs.conf
 ===>>
 /opt/splunkforwarder/bin/splunk  restart 
 ```
+
+
+### more stats query 
+
+```
+index="main" host="ip-172-31-85-58.ec2.internal"  status=40*  | stats count by clientip
+```
+
+### top and rare in SPL 
+
+<img src="topr.png">
+
+### using where 
+
+```
+index="main" host="ip-172-31-85-58.ec2.internal" | rare limit=100 clientip | where count<3
+```
+
+## reports tasks 
+
+<img src="reports.png">
+
+
+## intro to docker and container for splunk 
+
+- container is not having any particular OS or its library 
+
+<img src="libs1.png">
+
+### installing docker on any linux server 
+
+```
+[root@ip-172-31-22-181 httpd]# yum install docker -y 
+Failed to set locale, defaulting to C
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+Package docker-25.0.3-1.amzn2.0.1.x86_64 already installed and latest version
+Nothing to do
+[root@ip-172-31-22-181 httpd]# systemctl enable  --now docker 
+[root@ip-172-31-22-181 httpd]# 
+[root@ip-172-31-22-181 httpd]# docker version 
+Client:
+ Version:           25.0.3
+ API version:       1.44
+ Go version:        go1.20.12
+ Git commit:        4debf41
+ Built:             Wed Feb 28 00:29:45 2024
+ OS/Arch:           linux/amd64
+ Context:           default
+
+Server:
+ Engine:
+  Version:          25.0.3
+  API version:      1.44 (minimum version 1.24)
+  Go version:       go1.20.12
+
+
+```
+
+### deploy splunk enterprise server using docker
+
+```
+docker run -d -p 8000:8000 -e "SPLUNK_START_ARGS=--accept-license"  -e "SPLUNK_PASSWORD=redhat@098" --name splunk splunk/splunk:latest
+
+```
+
+
