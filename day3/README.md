@@ -99,3 +99,99 @@ colddb  datamodel_summary  db  thaweddb
 
 [click_here](https://community.splunk.com/)
 
+
+## Users in Splunk 
+
+<img src="users.png">
+
+## splunk apps for aws cloud 
+
+<img src="apps.png">
+
+### splunk in k8s 
+
+```
+[root@jpmc-splunk-server ~]# kubectl   get nodes
+NAME                                STATUS   ROLES   AGE   VERSION
+aks-agentpool-30100587-vmss000000   Ready    agent   8h    v1.28.9
+aks-agentpool-30100587-vmss000001   Ready    agent   8h    v1.28.9
+[root@jpmc-splunk-server ~]# kubectl  get  ns
+NAME              STATUS   AGE
+default           Active   8h
+kube-node-lease   Active   8h
+kube-public       Active   8h
+kube-system       Active   8h
+[root@jpmc-splunk-server ~]# kubectl  get pods
+No resources found in default namespace.
+[root@jpmc-splunk-server ~]# 
+[root@jpmc-splunk-server ~]# kubectl create  ns  ashu-splunk 
+namespace/ashu-splunk created
+[root@jpmc-splunk-server ~]# kubectl  get  ns
+NAME              STATUS   AGE
+ashu-splunk       Active   4s
+default           Active   8h
+kube-node-lease   Active   8h
+kube-public       Active   8h
+kube-system       Active   8h
+
+```
+
+### deploy app
+
+```
+[root@jpmc-splunk-server ~]# kubectl  create  deployment  ashu-webapp --image=nginx  --port 80 -n ashu-splunk
+deployment.apps/ashu-webapp created
+[root@jpmc-splunk-server ~]# kubectl  get  deploy
+No resources found in default namespace.
+[root@jpmc-splunk-server ~]# kubectl  get  deploy -n ashu-splunk 
+NAME          READY   UP-TO-DATE   AVAILABLE   AGE
+ashu-webapp   1/1     1            1           12s
+[root@jpmc-splunk-server ~]# kubectl  get  pods -n ashu-splunk 
+NAME                           READY   STATUS    RESTARTS   AGE
+ashu-webapp-66bcb8b767-5pbqh   1/1     Running   0          18s
+[root@jpmc-splunk-server ~]# kubectl  logs  ashu-webapp-66bcb8b767-5pbqh -n ashu-splunk 
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+
+```
+
+### updating splunk yaml for k8s
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: splunk-server
+  name: splunk-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: splunk-server
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: splunk-server
+    spec:
+      containers:
+      - image: splunk/splunk:latest
+        name: splunk
+        ports:
+        - containerPort: 8000
+        - containerPort: 8089
+        env: 
+        - name: SPLUNK_START_ARGS
+          value: --accept-license
+        - name: SPLUNK_PASSWORD
+          value: Redhat@098
+        resources: {}
+status: {}
+
+```
+
+
+
