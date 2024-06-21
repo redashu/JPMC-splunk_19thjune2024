@@ -65,3 +65,37 @@ curl  -k  -u admin:'kjhkh'   https://localhost:8089/services/search/jobs  -d sea
 curl  -k  -u admin:'Redhat@098)(*'   "https://localhost:8089/services/search/jobs/1718949555.394/results?output=json"
 ```
 
+### Understanding splunk Enterprise storage of indexed in server
+
+```
+[root@jpmc-splunk-server ~]# echo $SPLUNK_HOME
+/opt/splunk/
+[root@jpmc-splunk-server ~]# cd  /opt/splunk/
+[root@jpmc-splunk-server splunk]# ls
+README-splunk.txt  copyright.txt  lib               opt                splunk-9.2.1-78803f08aabb-linux-2.6-x86_64-manifest
+bin                etc            license-eula.txt  quarantined_files  swidtag
+cmake              include        openssl           share              var
+[root@jpmc-splunk-server splunk]# cd  var/lib/splunk/
+[root@jpmc-splunk-server splunk]# pwd
+/opt/splunk/var/lib/splunk
+
+```
+
+## Understanding bucket concept in splunk storage 
+
+<img src="bucket.png">
+
+### location of splunk data store
+
+```
+ 
+[root@jpmc-splunk-server ~]# cd /opt/splunk/var/lib/splunk/ashu-web/
+[root@jpmc-splunk-server ashu-web]# ls
+colddb  datamodel_summary  db  thaweddb
+[root@jpmc-splunk-server ashu-web]# 
+```
+
+### splunk community to get more info 
+
+[click_here](https://community.splunk.com/)
+
