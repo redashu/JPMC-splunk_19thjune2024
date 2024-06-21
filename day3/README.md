@@ -44,3 +44,24 @@ echo  "PATH=$PATH:$SPLUNK_HOME/bin"  >>~/.bashrc
 echo  "export PATH"  >>~/.bashrc 
 ```
 
+### SPlunk API 
+
+<img src="api1.png">
+
+### as a developer lets search it on splunk enterprse server 
+
+```
+curl  -k  -u admin:'kjhkh'   https://localhost:8089/services/search/jobs  -d search="search index=ashu-web"
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+  <sid>1718949555.394</sid>
+</response>
+
+```
+
+### using search id to search to result 
+
+```
+curl  -k  -u admin:'Redhat@098)(*'   "https://localhost:8089/services/search/jobs/1718949555.394/results?output=json"
+```
+
